@@ -2,6 +2,8 @@ package com.orm.util;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Base64;
+import android.util.Log;
 
 import com.securepreferences.SecurePreferences;
 
@@ -36,7 +38,9 @@ public final class SecureHelper {
 
 	public void storeKey(String key) {
 		SharedPreferences prefs = new SecurePreferences(context);
-		prefs.edit().putString("key", key.toString());
+		SharedPreferences.Editor editor = prefs.edit();
+		editor.putString("key", key);
+		editor.commit();
 	}
 
 	public String getKey() {
@@ -45,7 +49,7 @@ public final class SecureHelper {
 		if (key == null) {
 			try {
 				SecretKey secretKey = generateKey();
-				key = secretKey.toString();
+				key = Base64.encodeToString(secretKey.getEncoded(), Base64.DEFAULT);
 			} catch (Exception e) {
 				e.printStackTrace();
 				SecureRandom random = new SecureRandom();
