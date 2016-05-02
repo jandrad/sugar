@@ -1,12 +1,14 @@
 package com.orm;
 
 import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import com.orm.util.ManifestHelper;
+import com.orm.util.SecureHelper;
 import com.orm.util.SugarCursorFactory;
+
+import net.sqlcipher.database.SQLiteDatabase;
+import net.sqlcipher.database.SQLiteOpenHelper;
 
 import static com.orm.util.ManifestHelper.getDatabaseVersion;
 import static com.orm.util.ManifestHelper.getDebugEnabled;
@@ -15,12 +17,14 @@ public class SugarDb extends SQLiteOpenHelper {
 
     private final SchemaGenerator schemaGenerator;
     private SQLiteDatabase sqLiteDatabase;
+    private SecureHelper secureHelper;
     private int openedConnections = 0;
 
     public SugarDb(Context context) {
         super(context, ManifestHelper.getDatabaseName(context),
                 new SugarCursorFactory(getDebugEnabled(context)), getDatabaseVersion(context));
         schemaGenerator = new SchemaGenerator(context);
+        secureHelper = new SecureHelper(context);
     }
 
     @Override
@@ -35,17 +39,17 @@ public class SugarDb extends SQLiteOpenHelper {
 
     public synchronized SQLiteDatabase getDB() {
         if (this.sqLiteDatabase == null) {
-            this.sqLiteDatabase = getWritableDatabase();
+            this.sqLiteDatabase = getWritableDatabase(secureHelper.getKey());
         }
 
         return this.sqLiteDatabase;
     }
 
     @Override
-    public synchronized SQLiteDatabase getReadableDatabase() {
+    public synchronized SQLiteDatabase getReadableDatabase(String password) {
         Log.d("SUGAR", "getReadableDatabase");
         openedConnections++;
-        return super.getReadableDatabase();
+        return super.getReadableDatabase(password);
     }
 
     @Override

@@ -6,7 +6,7 @@ android {
     buildToolsVersion "23.0.2"
 
     defaultConfig {
-        minSdkVersion 9
+        minSdkVersion 10
         targetSdkVersion 23
     }
 
@@ -27,6 +27,8 @@ android {
 
 dependencies {
     testCompile 'junit:junit:4.12'
+    compile 'net.zetetic:android-database-sqlcipher:3.4.0'
+    compile 'com.scottyab:secure-preferences-lib:0.1.4'
 }
 
 task libraryJar(type: Jar) {

@@ -1,10 +1,6 @@
 package com.orm;
 
 import android.content.ContentValues;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteException;
-import android.database.sqlite.SQLiteStatement;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -14,6 +10,11 @@ import com.orm.util.NamingHelper;
 import com.orm.util.QueryBuilder;
 import com.orm.util.ReflectionUtil;
 import com.orm.util.SugarCursor;
+
+import net.sqlcipher.Cursor;
+import net.sqlcipher.database.SQLiteDatabase;
+import net.sqlcipher.database.SQLiteException;
+import net.sqlcipher.database.SQLiteStatement;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;

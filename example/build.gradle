@@ -5,7 +5,7 @@ android {
 
     defaultConfig {
         applicationId "com.example"
-        minSdkVersion 9
+        minSdkVersion 10
         targetSdkVersion 23
     }
 

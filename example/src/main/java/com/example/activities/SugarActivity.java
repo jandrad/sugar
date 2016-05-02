@@ -5,6 +5,8 @@ import android.os.Bundle;
 
 import com.example.R;
 
+import net.sqlcipher.database.SQLiteDatabase;
+
 
 public class SugarActivity extends Activity
 {
@@ -14,5 +16,7 @@ public class SugarActivity extends Activity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+
+        SQLiteDatabase.loadLibs(this);
     }
 }
